@@ -95,8 +95,8 @@ export function BookingDialog({
   // Trigger enter animation after mount + origin computed
   useEffect(() => {
     if (!mounted) return;
-    const id = requestAnimationFrame(() => setEntered(true));
-    return () => cancelAnimationFrame(id);
+    const t = setTimeout(() => setEntered(true), 20);
+    return () => clearTimeout(t);
   }, [mounted]);
 
   // Escape to close
