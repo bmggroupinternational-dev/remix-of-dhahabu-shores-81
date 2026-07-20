@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { SiteLayout, PageHero } from "@/components/site/SiteLayout";
 import { IMG } from "@/lib/images";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/reach-us")({
   head: () => ({
