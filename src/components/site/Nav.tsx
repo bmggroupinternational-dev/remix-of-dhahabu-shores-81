@@ -32,7 +32,7 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
         solid ? "bg-white/92 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.04)]" : "bg-transparent"
       }`}
     >
-      <div className="container-lux flex items-center justify-between py-3 md:py-4">
+      <div className="container-lux grid grid-cols-[1fr_auto_1fr] items-center py-3 md:py-4">
         <Link to="/" aria-label="Dhahabu Suites — Home" className="flex items-center">
           <img
             src={logo.url}
@@ -56,24 +56,26 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
           ))}
         </nav>
 
-        <Link
-          to="/contact"
-          className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-[0.7rem] tracking-[0.2em] uppercase font-medium rounded-sm transition-all duration-300 shadow-sm"
-          style={{ background: "var(--gold)", color: "#1a1a1a" }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#b8942d")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "var(--gold)")}
-        >
-          Book Now
-        </Link>
+        <div className="flex items-center justify-end gap-3">
+          <Link
+            to="/contact"
+            className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-[0.7rem] tracking-[0.2em] uppercase font-medium rounded-sm transition-all duration-300 shadow-sm"
+            style={{ background: "var(--gold)", color: "#1a1a1a" }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#b8942d")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "var(--gold)")}
+          >
+            Book Now
+          </Link>
 
-        <button
-          onClick={() => setOpen(true)}
-          className="lg:hidden p-2 -mr-2"
-          aria-label="Open menu"
-          style={{ color: solid ? "var(--brown)" : "#fff" }}
-        >
-          <Menu size={26} />
-        </button>
+          <button
+            onClick={() => setOpen(true)}
+            className="lg:hidden p-2 -mr-2"
+            aria-label="Open menu"
+            style={{ color: solid ? "var(--brown)" : "#fff" }}
+          >
+            <Menu size={26} />
+          </button>
+        </div>
       </div>
 
       {open && (
