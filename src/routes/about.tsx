@@ -8,6 +8,16 @@ import {
   Home as HomeIcon,
   MapPin,
   HeartHandshake,
+  Camera,
+  Car,
+  Tv,
+  Radio,
+  MonitorPlay,
+  ChefHat,
+  Bath,
+  Snowflake,
+  Briefcase,
+  Lock,
 } from "lucide-react";
 import { SiteLayout, PageHero } from "@/components/site/SiteLayout";
 import { IMG } from "@/lib/images";
