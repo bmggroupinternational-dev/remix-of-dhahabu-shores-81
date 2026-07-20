@@ -62,15 +62,23 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
 
         <div className="flex items-center justify-end gap-3">
           <button
+            ref={bookBtnRef}
             type="button"
             onClick={() => setBookingOpen(true)}
-            className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-[0.7rem] tracking-[0.2em] uppercase font-medium rounded-sm transition-all duration-300 shadow-sm"
-            style={{ background: "var(--gold)", color: "#1a1a1a" }}
+            className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-[0.7rem] tracking-[0.2em] uppercase font-medium rounded-sm shadow-sm"
+            style={{
+              background: "var(--gold)",
+              color: "#1a1a1a",
+              opacity: bookingOpen ? 0 : 1,
+              transform: bookingOpen ? "scale(0.85)" : "scale(1)",
+              transition: "opacity 300ms cubic-bezier(0.22,1,0.36,1), transform 300ms cubic-bezier(0.22,1,0.36,1), background 300ms",
+            }}
             onMouseEnter={(e) => (e.currentTarget.style.background = "#b8942d")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "var(--gold)")}
           >
             Book Now
           </button>
+
 
 
           <button
