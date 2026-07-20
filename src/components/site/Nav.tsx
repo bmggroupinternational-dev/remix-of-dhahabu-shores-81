@@ -37,7 +37,7 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
           <img
             src={logo.url}
             alt="Dhahabu Suites"
-            className="h-11 md:h-14 w-auto object-contain"
+            className="h-14 md:h-16 w-auto object-contain"
           />
         </Link>
 
@@ -46,7 +46,7 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
             <Link
               key={l.to}
               to={l.to}
-              className="text-[0.72rem] tracking-[0.2em] uppercase transition-colors hover:!text-[var(--gold)]"
+              className="text-[0.72rem] tracking-[0.2em] uppercase font-semibold transition-colors hover:!text-[var(--gold)]"
               style={{ color: solid ? "var(--brown)" : "rgba(255,255,255,0.95)" }}
               activeProps={{ style: { color: "var(--gold)" } }}
               activeOptions={{ exact: l.to === "/" }}
@@ -81,7 +81,7 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
       {open && (
         <div className="fixed inset-0 z-50 bg-white flex flex-col">
           <div className="container-lux flex items-center justify-between py-4">
-            <img src={logo.url} alt="Dhahabu Suites" className="h-11 w-auto object-contain" />
+            <img src={logo.url} alt="Dhahabu Suites" className="h-14 w-auto object-contain" />
             <button onClick={() => setOpen(false)} aria-label="Close menu" style={{ color: "var(--brown)" }}>
               <X size={28} />
             </button>
