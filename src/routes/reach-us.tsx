@@ -180,15 +180,20 @@ function ReachUs() {
       </section>
 
       {/* Nearby */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 overflow-hidden">
         <div className="container-lux">
           <div className="text-center max-w-2xl mx-auto">
             <span className="eyebrow">Nearby</span>
             <h2 className="mt-3 font-display text-3xl md:text-4xl">Everything within easy reach</h2>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {NEARBY.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="bg-[var(--cream)] p-7">
+        </div>
+        <div className="mt-12 relative">
+          <div className="flex gap-6 w-max animate-marquee">
+            {[...NEARBY, ...NEARBY, ...NEARBY, ...NEARBY].map(({ icon: Icon, title, body }, index) => (
+              <div
+                key={`${title}-${index}`}
+                className="bg-[var(--cream)] p-7 w-[280px] md:w-[320px] shrink-0"
+              >
                 <Icon size={22} style={{ color: "var(--gold)" }} />
                 <h3 className="mt-4 font-display text-xl">{title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{body}</p>
