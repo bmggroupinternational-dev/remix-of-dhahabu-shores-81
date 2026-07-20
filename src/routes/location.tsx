@@ -40,12 +40,13 @@ function Location() {
           <div className="lg:col-span-2 overflow-hidden border">
             <iframe
               title="Dhahabu Suites location"
-              src="https://www.google.com/maps?q=Mbezi+Beach,+Dar+es+Salaam,+Tanzania&output=embed"
+              src="https://www.google.com/maps?q=Dhahabu+Suites,+Mbezi+Beach,+Dar+es+Salaam&output=embed"
               className="w-full h-[420px] md:h-[520px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
+
           <div className="space-y-5">
             <span className="eyebrow">Address</span>
             <h2 className="font-display text-3xl">Dhahabu Suites</h2>
@@ -54,13 +55,14 @@ function Location() {
               Mbezi Beach, Dar es Salaam, Tanzania
             </p>
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=Mbezi+Beach,+Dar+es+Salaam,+Tanzania"
+              href="https://www.google.com/maps/dir/?api=1&destination=Dhahabu+Suites,+Mbezi+Beach,+Dar+es+Salaam"
               target="_blank"
               rel="noreferrer"
               className="btn-gold btn-gold-hover"
             >
               Get Directions <Navigation size={14} />
             </a>
+
             <div className="pt-6 border-t">
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Set in the residential calm of Mbezi Beach, Dhahabu Suites is close enough to be connected and far
