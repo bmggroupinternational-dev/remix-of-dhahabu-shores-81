@@ -1,17 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import logo from "@/assets/brand/dhahabu-logo.png.asset.json";
 
 export function Footer() {
   return (
     <footer className="mt-24 border-t" style={{ background: "var(--cream)" }}>
       <div className="container-lux py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
-          <div className="font-display text-3xl" style={{ color: "var(--brown)" }}>
-            Dhahabu
-          </div>
-          <div className="text-[0.65rem] tracking-[0.45em] uppercase mt-1" style={{ color: "var(--gold)" }}>
-            Suites
-          </div>
+          <img src={logo.url} alt="Dhahabu Suites" className="h-16 w-auto object-contain -ml-2" />
+
           <p className="mt-6 text-sm leading-relaxed text-muted-foreground max-w-xs">
             Luxury serviced apartments in Mbezi Beach, Dar es Salaam — designed for comfort, elegance, and privacy.
           </p>
