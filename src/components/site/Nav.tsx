@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/brand/dhahabu-logo.png.asset.json";
 import { BookingDialog } from "./BookingDialog";
