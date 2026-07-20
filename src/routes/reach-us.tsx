@@ -14,7 +14,6 @@ import {
   Cross,
   Bus,
   ChevronDown,
-  ChevronUp,
   X,
   Check,
 } from "lucide-react";
