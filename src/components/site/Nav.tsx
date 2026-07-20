@@ -2,6 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/brand/dhahabu-logo.png.asset.json";
+import { BookingDialog } from "./BookingDialog";
+
 
 const links = [
   { to: "/", label: "Home" },
@@ -12,8 +14,9 @@ const links = [
 ] as const;
 
 export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean }) {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
