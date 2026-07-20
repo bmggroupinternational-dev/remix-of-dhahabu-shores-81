@@ -8,6 +8,16 @@ import {
   Home as HomeIcon,
   MapPin,
   HeartHandshake,
+  Camera,
+  Car,
+  Tv,
+  Radio,
+  MonitorPlay,
+  ChefHat,
+  Bath,
+  Snowflake,
+  Briefcase,
+  Lock,
 } from "lucide-react";
 import { SiteLayout, PageHero } from "@/components/site/SiteLayout";
 import { IMG } from "@/lib/images";
@@ -104,6 +114,50 @@ function About() {
           <img src={IMG.poolExterior} alt="Pool" className="aspect-[4/5] object-cover" />
         </div>
       </section>
+
+      <section className="py-24 md:py-32" style={{ background: "var(--cream)" }}>
+        <div className="container-lux">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="eyebrow">Amenities</span>
+            <h2 className="mt-4 font-display text-4xl md:text-5xl">
+              Everything you'd expect. Nothing you wouldn't.
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              A complete residence, quietly serviced — every detail attended to.
+            </p>
+          </div>
+          <div className="mt-14 grid gap-px sm:grid-cols-2 lg:grid-cols-4 bg-border">
+            {AMENITIES.map(({ icon: Icon, label }) => (
+              <div
+                key={label}
+                className="bg-white p-8 flex flex-col items-start gap-4 transition-colors hover:bg-[var(--cream)]"
+              >
+                <Icon size={26} style={{ color: "var(--gold)" }} />
+                <h3 className="font-display text-lg">{label}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </SiteLayout>
   );
 }
+
+const AMENITIES = [
+  { icon: Waves, label: "Swimming Pool" },
+  { icon: ShieldCheck, label: "24/7 Security" },
+  { icon: Camera, label: "External CCTV Surveillance" },
+  { icon: Car, label: "Secure Parking" },
+  { icon: Wifi, label: "High-Speed Internet" },
+  { icon: Tv, label: "Smart TV" },
+  { icon: MonitorPlay, label: "DSTV" },
+  { icon: Radio, label: "Azam TV" },
+  { icon: ChefHat, label: "Fully Equipped Kitchen" },
+  { icon: Bath, label: "Bathtub" },
+  { icon: HomeIcon, label: "Outdoor Pergola" },
+  { icon: Sparkles, label: "Professional Housekeeping" },
+  { icon: Snowflake, label: "Air Conditioning" },
+  { icon: Briefcase, label: "Dedicated Workspace" },
+  { icon: Users, label: "Family Friendly" },
+  { icon: Lock, label: "Private Living Environment" },
+];
