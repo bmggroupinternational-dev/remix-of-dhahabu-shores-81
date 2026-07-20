@@ -98,9 +98,6 @@ function Home() {
             Experience premium serviced apartments designed for comfort, elegance, and privacy in Dar es Salaam.
           </p>
           <div className="mt-9 flex flex-wrap gap-4 fade-up">
-            <Link to="/contact" className="btn-gold btn-gold-hover">
-              Book Your Stay
-            </Link>
             <Link to="/apartments" className="btn-outline-light">
               Explore Apartments
             </Link>
