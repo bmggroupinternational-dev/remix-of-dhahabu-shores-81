@@ -108,41 +108,100 @@ function ReachUs() {
 
           {/* Form */}
           <div className="lg:col-span-3">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSent(true);
-              }}
-              className="bg-white p-8 md:p-10 border shadow-[0_20px_60px_-30px_rgba(0,0,0,0.15)] grid gap-5 md:grid-cols-2"
-            >
-              <Field label="Full Name" name="name" required />
-              <Field label="Email" name="email" type="email" required />
-              <Field label="Phone" name="phone" type="tel" />
-              <Field label="Apartment" name="apt" as="select">
-                <option>2 Bedroom Apartment</option>
-                <option>3 Bedroom Apartment</option>
-                <option>Not sure yet</option>
-              </Field>
-              <Field label="Check-in" name="in" type="date" />
-              <Field label="Check-out" name="out" type="date" />
-              <div className="md:col-span-2">
-                <Field label="Message" name="message" as="textarea" />
-              </div>
-              <div className="md:col-span-2 flex items-center justify-between gap-4 flex-wrap">
-                {sent ? (
-                  <p className="text-sm" style={{ color: "var(--gold)" }}>
-                    Thank you — we've received your enquiry and will be in touch shortly.
-                  </p>
-                ) : (
-                  <p className="text-xs text-muted-foreground">
-                    We respond to all enquiries within 24 hours.
-                  </p>
+            <div className="bg-white border shadow-[0_20px_60px_-30px_rgba(0,0,0,0.15)] overflow-hidden">
+              {/* Collapsed header */}
+              <button
+                type="button"
+                onClick={() => setOpen(true)}
+                className={cn(
+                  "w-full flex items-center justify-between p-8 md:p-10 text-left transition-colors hover:bg-[var(--cream)]",
+                  open && "hidden"
                 )}
-                <button type="submit" className="btn-gold btn-gold-hover">
-                  Send Enquiry <Send size={14} />
-                </button>
+              >
+                <div>
+                  <span className="eyebrow">Enquiry</span>
+                  {sent ? (
+                    <div className="mt-3 space-y-2">
+                      <p className="font-display text-xl md:text-2xl flex items-center gap-2" style={{ color: "var(--gold)" }}>
+                        <Check size={22} /> Enquiry received
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        We'll be in touch shortly. Click here to send another enquiry.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="mt-3 space-y-1">
+                      <h3 className="font-display text-2xl md:text-3xl">Send an enquiry</h3>
+                      <p className="text-sm text-muted-foreground">Fill in your details and we'll respond within 24 hours.</p>
+                    </div>
+                  )}
+                </div>
+                <span
+                  className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                  style={{ background: "var(--cream)", color: "var(--gold)" }}
+                >
+                  <ChevronDown size={20} />
+                </span>
+              </button>
+
+              {/* Expanded form */}
+              <div
+                className={cn(
+                  "grid transition-all duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+                  open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                )}
+              >
+                <div className="overflow-hidden">
+                  <form
+                    ref={formRef}
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      setSent(true);
+                      setOpen(false);
+                    }}
+                    className="p-8 md:p-10 grid gap-5 md:grid-cols-2"
+                  >
+                    <div className="md:col-span-2 flex items-start justify-between gap-4">
+                      <div>
+                        <span className="eyebrow">Enquiry</span>
+                        <h3 className="mt-1 font-display text-2xl md:text-3xl">Send an enquiry</h3>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setOpen(false)}
+                        className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors hover:bg-[var(--cream)]"
+                        style={{ color: "var(--brown)" }}
+                        aria-label="Close enquiry form"
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+
+                    <Field label="Full Name" name="name" required />
+                    <Field label="Email" name="email" type="email" required />
+                    <Field label="Phone" name="phone" type="tel" />
+                    <Field label="Apartment" name="apt" as="select">
+                      <option>2 Bedroom Apartment</option>
+                      <option>3 Bedroom Apartment</option>
+                      <option>Not sure yet</option>
+                    </Field>
+                    <Field label="Check-in" name="in" type="date" />
+                    <Field label="Check-out" name="out" type="date" />
+                    <div className="md:col-span-2">
+                      <Field label="Message" name="message" as="textarea" />
+                    </div>
+                    <div className="md:col-span-2 flex items-center justify-between gap-4 flex-wrap">
+                      <p className="text-xs text-muted-foreground">
+                        We respond to all enquiries within 24 hours.
+                      </p>
+                      <button type="submit" className="btn-gold btn-gold-hover">
+                        Send Enquiry <Send size={14} />
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </section>
