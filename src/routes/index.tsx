@@ -113,56 +113,8 @@ function Home() {
         </a>
       </section>
 
-      {/* BOOKING WIDGET */}
-      <section id="booking" className="relative -mt-16 md:-mt-20 z-20">
-        <div className="container-lux">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              window.location.href = "/reach-us";
-            }}
-            className="bg-white shadow-[0_30px_80px_-30px_rgba(0,0,0,0.25)] rounded-sm p-6 md:p-8 grid gap-4 md:grid-cols-5"
-          >
-            {[
-              { label: "Check-in", type: "date", name: "checkin" },
-              { label: "Check-out", type: "date", name: "checkout" },
-            ].map((f) => (
-              <label key={f.name} className="flex flex-col gap-1.5">
-                <span className="text-[0.65rem] tracking-[0.25em] uppercase" style={{ color: "var(--brown)" }}>
-                  {f.label}
-                </span>
-                <input
-                  type={f.type}
-                  name={f.name}
-                  className="border-b border-black/15 py-2 text-sm outline-none focus:border-[var(--gold)] transition-colors bg-transparent"
-                />
-              </label>
-            ))}
-            <label className="flex flex-col gap-1.5">
-              <span className="text-[0.65rem] tracking-[0.25em] uppercase" style={{ color: "var(--brown)" }}>
-                Guests
-              </span>
-              <select className="border-b border-black/15 py-2 text-sm outline-none focus:border-[var(--gold)] bg-transparent">
-                {[1, 2, 3, 4, 5, 6].map((n) => (
-                  <option key={n}>{n} Guest{n > 1 ? "s" : ""}</option>
-                ))}
-              </select>
-            </label>
-            <label className="flex flex-col gap-1.5">
-              <span className="text-[0.65rem] tracking-[0.25em] uppercase" style={{ color: "var(--brown)" }}>
-                Apartment
-              </span>
-              <select className="border-b border-black/15 py-2 text-sm outline-none focus:border-[var(--gold)] bg-transparent">
-                <option>2 Bedroom Apartment</option>
-                <option>3 Bedroom Apartment</option>
-              </select>
-            </label>
-            <button type="submit" className="btn-gold btn-gold-hover self-end">
-              Book Now
-            </button>
-          </form>
-        </div>
-      </section>
+
+
 
       {/* INTRO */}
       <section className="py-24 md:py-32">
