@@ -22,7 +22,6 @@ export function Footer() {
             {[
               ["About", "/about"],
               ["Apartments", "/apartments"],
-              ["Amenities", "/amenities"],
               ["Gallery", "/gallery"],
               ["Reach Us", "/reach-us"],
             ].map(([label, href]) => (
