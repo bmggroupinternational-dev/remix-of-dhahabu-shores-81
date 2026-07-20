@@ -184,3 +184,20 @@
 @utility ken-burns {
   animation: kenburns 12s ease-out both;
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+@utility marquee-track-pause {
+  &:hover {
+    animation-play-state: paused;
+  }
+}
