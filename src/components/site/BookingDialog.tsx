@@ -110,8 +110,9 @@ export function BookingDialog({
   }, [open, onOpenChange]);
 
   if (!mounted) return null;
+  if (typeof document === "undefined") return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50">
       {/* Scrim + blur */}
       <button
