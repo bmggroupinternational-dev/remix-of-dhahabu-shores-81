@@ -46,6 +46,8 @@ const NEARBY = [
 
 function ReachUs() {
   const [sent, setSent] = useState(false);
+  const [open, setOpen] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   return (
     <SiteLayout>
       <PageHero
