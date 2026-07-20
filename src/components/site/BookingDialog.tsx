@@ -261,6 +261,7 @@ export function BookingDialog({
           <X size={14} />
         </button>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
