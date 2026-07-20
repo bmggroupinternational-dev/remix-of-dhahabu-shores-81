@@ -40,12 +40,13 @@ function Location() {
           <div className="lg:col-span-2 overflow-hidden border">
             <iframe
               title="Dhahabu Suites location"
-              src="https://www.google.com/maps?q=Mbezi+Beach,+Dar+es+Salaam,+Tanzania&output=embed"
+              src="https://www.google.com/maps?q=Dhahabu+Suites,+Mbezi+Beach,+Dar+es+Salaam&output=embed"
               className="w-full h-[420px] md:h-[520px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
+
           <div className="space-y-5">
             <span className="eyebrow">Address</span>
             <h2 className="font-display text-3xl">Dhahabu Suites</h2>
