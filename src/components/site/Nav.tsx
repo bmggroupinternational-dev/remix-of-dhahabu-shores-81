@@ -60,15 +60,17 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
         </nav>
 
         <div className="flex items-center justify-end gap-3">
-          <Link
-            to="/reach-us"
+          <button
+            type="button"
+            onClick={() => setBookingOpen(true)}
             className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-[0.7rem] tracking-[0.2em] uppercase font-medium rounded-sm transition-all duration-300 shadow-sm"
             style={{ background: "var(--gold)", color: "#1a1a1a" }}
             onMouseEnter={(e) => (e.currentTarget.style.background = "#b8942d")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "var(--gold)")}
           >
             Book Now
-          </Link>
+          </button>
+
 
           <button
             onClick={() => setOpen(true)}
@@ -103,14 +105,18 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
                 {l.label}
               </Link>
             ))}
-            <Link
-              to="/reach-us"
-              onClick={() => setOpen(false)}
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                setBookingOpen(true);
+              }}
               className="mt-6 px-6 py-3 text-xs tracking-[0.2em] uppercase rounded-sm"
               style={{ background: "var(--gold)", color: "#1a1a1a" }}
             >
               Book Now
-            </Link>
+            </button>
+
           </nav>
         </div>
       )}
