@@ -32,5 +32,5 @@ export const GALLERY: { src: string; category: string; alt: string }[] = [
   { src: IMG.bathroomDetail, category: "Bathrooms", alt: "Vessel sink and chrome fixtures" },
   { src: IMG.poolExterior, category: "Swimming Pool", alt: "Pool and cabana lounge area" },
   { src: IMG.exterior, category: "Exterior", alt: "Modern exterior facade with landscaped walkway" },
-  { src: IMG.decorDetail, category: "Property Grounds", alt: "Interior decor details" },
+  
 ];
