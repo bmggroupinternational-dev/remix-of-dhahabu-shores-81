@@ -14,8 +14,10 @@ const links = [
 ] as const;
 
 export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean }) {
+  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+
 
 
   useEffect(() => {
