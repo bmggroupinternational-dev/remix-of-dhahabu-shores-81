@@ -130,7 +130,7 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
         </div>
       )}
 
-      <BookingDialog open={bookingOpen} onOpenChange={setBookingOpen} />
+      <BookingDialog open={bookingOpen} onOpenChange={setBookingOpen} originRef={bookBtnRef} />
     </header>
   );
 }
