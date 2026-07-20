@@ -55,13 +55,14 @@ function Location() {
               Mbezi Beach, Dar es Salaam, Tanzania
             </p>
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=Mbezi+Beach,+Dar+es+Salaam,+Tanzania"
+              href="https://www.google.com/maps/dir/?api=1&destination=Dhahabu+Suites,+Mbezi+Beach,+Dar+es+Salaam"
               target="_blank"
               rel="noreferrer"
               className="btn-gold btn-gold-hover"
             >
               Get Directions <Navigation size={14} />
             </a>
+
             <div className="pt-6 border-t">
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Set in the residential calm of Mbezi Beach, Dhahabu Suites is close enough to be connected and far
