@@ -119,7 +119,7 @@ function Home() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              window.location.href = "/contact";
+              window.location.href = "/reach-us";
             }}
             className="bg-white shadow-[0_30px_80px_-30px_rgba(0,0,0,0.25)] rounded-sm p-6 md:p-8 grid gap-4 md:grid-cols-5"
           >
@@ -297,7 +297,7 @@ function Home() {
             Speak to our reservations team for availability, rates and long-stay arrangements.
           </p>
           <div className="mt-8 flex flex-wrap gap-4 justify-center">
-            <Link to="/contact" className="btn-gold btn-gold-hover">Book Your Stay</Link>
+            <Link to="/reach-us" className="btn-gold btn-gold-hover">Book Your Stay</Link>
             <a href="tel:+255724972277" className="btn-outline-light">Call +255 724 972 277</a>
           </div>
         </div>
