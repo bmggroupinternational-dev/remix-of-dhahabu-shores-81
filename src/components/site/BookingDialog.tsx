@@ -39,7 +39,7 @@ export function BookingDialog({
 
   const [mounted, setMounted] = useState(open);
   const [entered, setEntered] = useState(false);
-  const [origin, setOrigin] = useState<{ x: number; y: number }>({ x: 50, y: 0 });
+  const [delta, setDelta] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const panelRef = useRef<HTMLDivElement>(null);
 
   const nights = useMemo(() => {
@@ -68,21 +68,22 @@ export function BookingDialog({
     }
   }, [open, mounted]);
 
-  // Compute origin from trigger button
+  // Compute delta from button center to panel's final center
   useLayoutEffect(() => {
     if (!mounted) return;
     const compute = () => {
       const panel = panelRef.current;
       if (!panel) return;
       const panelRect = panel.getBoundingClientRect();
+      const panelCenterX = panelRect.left + panelRect.width / 2;
+      const panelCenterY = panelRect.top + panelRect.height / 2;
       const btn = originRef?.current?.getBoundingClientRect();
       if (btn) {
-        setOrigin({
-          x: btn.left + btn.width / 2 - panelRect.left,
-          y: btn.top + btn.height / 2 - panelRect.top,
-        });
+        const btnCx = btn.left + btn.width / 2;
+        const btnCy = btn.top + btn.height / 2;
+        setDelta({ x: btnCx - panelCenterX, y: btnCy - panelCenterY });
       } else {
-        setOrigin({ x: panelRect.width / 2, y: 0 });
+        setDelta({ x: 0, y: -panelRect.height / 2 });
       }
     };
     compute();
@@ -131,17 +132,18 @@ export function BookingDialog({
         role="dialog"
         aria-modal="true"
         aria-label="Reserve your stay"
-        className="absolute left-1/2 -translate-x-1/2 w-[95vw] max-w-5xl rounded-lg border bg-background shadow-2xl"
+        className="absolute left-1/2 w-[95vw] max-w-5xl rounded-lg border bg-background shadow-2xl"
         style={{
           top: "88px",
-          transformOrigin: `${origin.x}px ${origin.y}px`,
+          transformOrigin: "center center",
           transform: entered
             ? "translateX(-50%) scale(1)"
-            : "translateX(-50%) scale(0.3)",
+            : `translate(calc(-50% + ${delta.x}px), ${delta.y}px) scale(0.3)`,
           opacity: entered ? 1 : 0,
           transition: `transform ${DURATION}ms ${EASE}, opacity ${DURATION}ms ${EASE}`,
         }}
       >
+
         <div className="flex flex-col md:flex-row md:items-stretch">
           {/* Dates */}
           <Popover>
