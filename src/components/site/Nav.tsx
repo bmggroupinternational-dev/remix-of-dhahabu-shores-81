@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/brand/dhahabu-logo.png.asset.json";
 
 const links = [
   { to: "/", label: "Home" },
@@ -29,23 +30,16 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
-        solid ? "bg-white/90 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.04)]" : "bg-transparent"
+        solid ? "bg-white/92 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.04)]" : "bg-transparent"
       }`}
     >
-      <div className="container-lux flex items-center justify-between py-4 md:py-5">
-        <Link to="/" className="flex flex-col leading-none">
-          <span
-            className="font-display text-2xl md:text-[1.7rem] tracking-wide"
-            style={{ color: solid ? "var(--brown)" : "#fff" }}
-          >
-            Dhahabu
-          </span>
-          <span
-            className="text-[0.6rem] tracking-[0.45em] uppercase mt-0.5"
-            style={{ color: "var(--gold)" }}
-          >
-            Suites
-          </span>
+      <div className="container-lux flex items-center justify-between py-3 md:py-4">
+        <Link to="/" aria-label="Dhahabu Suites — Home" className="flex items-center">
+          <img
+            src={logo.url}
+            alt="Dhahabu Suites"
+            className="h-11 md:h-14 w-auto object-contain"
+          />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8">
@@ -54,7 +48,7 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
               key={l.to}
               to={l.to}
               className="text-[0.72rem] tracking-[0.2em] uppercase transition-colors hover:!text-[var(--gold)]"
-              style={{ color: solid ? "var(--brown)" : "rgba(255,255,255,0.9)" }}
+              style={{ color: solid ? "var(--brown)" : "rgba(255,255,255,0.95)" }}
               activeProps={{ style: { color: "var(--gold)" } }}
               activeOptions={{ exact: l.to === "/" }}
             >
@@ -63,7 +57,13 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
           ))}
         </nav>
 
-        <Link to="/contact" className="hidden lg:inline-flex btn-gold btn-gold-hover">
+        <Link
+          to="/contact"
+          className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-[0.7rem] tracking-[0.2em] uppercase font-medium rounded-sm transition-all duration-300 shadow-sm"
+          style={{ background: "var(--gold)", color: "#1a1a1a" }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#b8942d")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "var(--gold)")}
+        >
           Book Now
         </Link>
 
@@ -79,10 +79,8 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
 
       {open && (
         <div className="fixed inset-0 z-50 bg-white flex flex-col">
-          <div className="container-lux flex items-center justify-between py-5">
-            <span className="font-display text-2xl" style={{ color: "var(--brown)" }}>
-              Dhahabu <span style={{ color: "var(--gold)" }}>Suites</span>
-            </span>
+          <div className="container-lux flex items-center justify-between py-4">
+            <img src={logo.url} alt="Dhahabu Suites" className="h-11 w-auto object-contain" />
             <button onClick={() => setOpen(false)} aria-label="Close menu" style={{ color: "var(--brown)" }}>
               <X size={28} />
             </button>
@@ -101,7 +99,12 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
                 {l.label}
               </Link>
             ))}
-            <Link to="/contact" onClick={() => setOpen(false)} className="btn-gold btn-gold-hover mt-6">
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
+              className="mt-6 px-6 py-3 text-xs tracking-[0.2em] uppercase rounded-sm"
+              style={{ background: "var(--gold)", color: "#1a1a1a" }}
+            >
               Book Now
             </Link>
           </nav>
