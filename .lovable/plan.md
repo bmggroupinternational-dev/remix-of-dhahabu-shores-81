@@ -1,39 +1,26 @@
-Merge the current `/location` and `/contact` routes into one unified "Reach Us" page, keeping the contact form and the pinpointed map while removing duplication.
+## Goal
+Remove the always-visible reservation form on the home page and only show it when the user clicks **Book Now** (top nav). It should animate in over a blurred backdrop.
 
-## What we will change
+## Changes
 
-### 1. New single page: `/reach-us`
-- Rename the merged page to **"Reach Us — Dhahabu Suites"**.
-- URL: `/reach-us` (matches the new title and single nav entry).
-- Hero section: title "Reach Us", subtitle combining reservations + location.
-- Page content:
-  - Contact form from the current `/contact` page.
-  - Contact info cards (phone, WhatsApp, email, address).
-  - The **pinpointed Google Maps embed** from the current `/location` page.
-  - Address and directions CTA.
-  - Nearby attractions grid from the current `/location` page.
-- Remove the duplicate map that currently appears at the bottom of `/contact`.
+### 1. `src/routes/index.tsx`
+- Remove the entire `{/* BOOKING WIDGET */}` `<section id="booking">` block (the white card with check-in/out, guests, apartment, Book Now).
+- Remove the now-unused `-mt-16` visual overlap. Section below (INTRO) becomes the first content after the hero.
 
-### 2. Navigation update
-- In `src/components/site/Nav.tsx`, replace the two separate links **Location** and **Contact** with a single **Reach Us** link pointing to `/reach-us`.
-- Keep the same centered three-column layout and visual balance.
+### 2. New `src/components/site/BookingDialog.tsx`
+- Reuse the same reservation UI already built inside `FloatingButtons.tsx` (react-day-picker range calendar, apartment select, guests select, WhatsApp confirm link with prefilled message).
+- Extract it into a standalone controlled component: `<BookingDialog open onOpenChange />`.
+- Use shadcn `Dialog` — `DialogContent` already renders a backdrop overlay. Add `backdrop-blur-md` to the overlay via a custom className, and use enter animations (`animate-scale-in` + fade) so it appears with a special effect.
+- Refactor `FloatingButtons.tsx` to use this shared component so the floating calendar button and nav Book Now open the same dialog (no duplicated form logic).
 
-### 3. Footer update
-- In `src/components/site/Footer.tsx`, replace the separate **Location** link under "Explore" with **Reach Us** pointing to `/reach-us`.
-- Keep the existing "Contact" column with address, phone, and email.
+### 3. `src/components/site/Nav.tsx`
+- Change the desktop and mobile **Book Now** buttons from `<Link to="/reach-us">` (or current href) to a `<button>` that sets `bookingOpen` state.
+- Render `<BookingDialog open={bookingOpen} onOpenChange={setBookingOpen} />` inside Nav.
 
-### 4. Route cleanup
-- Delete `src/routes/location.tsx`.
-- Repurpose `src/routes/contact.tsx` as `src/routes/reach-us.tsx` (or rename it) and update `createFileRoute` accordingly.
-- Let `routeTree.gen.ts` regenerate from the new route files.
+## Technical notes
+- Dialog overlay blur: pass `className="backdrop-blur-md bg-black/40"` to `DialogOverlay` via a small wrapper, or override in the existing shadcn `dialog.tsx` overlay with an additional class through `DialogContent`'s sibling overlay (shadcn exposes the overlay class through the primitive; simplest path is a local `<DialogContent className="...">` plus a custom overlay via `DialogPrimitive.Overlay`).
+- Entrance effect: shadcn Dialog already animates via `data-[state=open]:animate-in fade-in-0 zoom-in-95` — keep and layer the blurred overlay so the "special effect" reads as backdrop blur + scale/fade.
+- No route or business-logic changes; WhatsApp link and message format stay identical.
 
-### 5. Redirects
-- Add a catch-all redirect from `/location` and `/contact` to `/reach-us` so existing bookmarks and search links still work.
-
-### 6. SEO metadata
-- Set the merged page title to `Reach Us — Dhahabu Suites`.
-- Update description to cover both reservations and the Mbezi Beach location.
-- Add canonical link `/reach-us` and og:url `/reach-us`.
-
-## Result
-One clean "Reach Us" route replaces the two separate pages. Users get the contact form, the pinpointed map, and the nearby-attractions list in one place, with a single navigation entry and no duplicate map.
+## Out of scope
+- No changes to `/reach-us`, floating WhatsApp button behavior, or the reservation message content.
