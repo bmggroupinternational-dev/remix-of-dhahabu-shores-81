@@ -188,7 +188,7 @@ function ReachUs() {
           </div>
         </div>
         <div className="mt-12 relative">
-          <div className="flex gap-6 w-max animate-marquee">
+          <div className="marquee-track marquee-track-pause gap-6">
             {[...NEARBY, ...NEARBY, ...NEARBY, ...NEARBY].map(({ icon: Icon, title, body }, index) => (
               <div
                 key={`${title}-${index}`}
