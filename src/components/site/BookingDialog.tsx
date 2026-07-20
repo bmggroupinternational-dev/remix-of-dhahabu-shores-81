@@ -1,42 +1,46 @@
-import { useMemo, useState } from "react";
-import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { MessageCircle, Users, X, Sparkles } from "lucide-react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { CalendarDays, Users, X, ChevronDown } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import {
-  Dialog,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const WHATSAPP_BASE = "https://wa.me/255724972277";
 const WHATSAPP_DEFAULT = `${WHATSAPP_BASE}?text=${encodeURIComponent(
   "Hello Dhahabu Suites, I would like to make a reservation",
 )}`;
 
+const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+const DURATION = 420;
+
 function fmt(d?: Date) {
   if (!d) return "";
   return d.toLocaleDateString(undefined, {
-    weekday: "short",
     month: "short",
     day: "numeric",
-    year: "numeric",
   });
 }
 
 export function BookingDialog({
   open,
   onOpenChange,
+  originRef,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
+  originRef?: RefObject<HTMLElement | null>;
 }) {
   const [range, setRange] = useState<DateRange | undefined>();
   const [guests, setGuests] = useState(2);
   const [apt, setApt] = useState("2 Bedroom Apartment");
+
+  const [mounted, setMounted] = useState(open);
+  const [entered, setEntered] = useState(false);
+  const [origin, setOrigin] = useState<{ x: number; y: number }>({ x: 50, y: 0 });
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const nights = useMemo(() => {
     if (!range?.from || !range?.to) return 0;
@@ -53,154 +57,206 @@ export function BookingDialog({
     return `${WHATSAPP_BASE}?text=${msg}`;
   }, [canConfirm, apt, range, nights, guests]);
 
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay
-          className={cn(
-            "fixed inset-0 z-50 bg-black/40 backdrop-blur-md",
-            "data-[state=open]:animate-in data-[state=closed]:animate-out",
-            "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-          )}
-        />
-        <DialogPrimitive.Content
-          className={cn(
-            "fixed left-[50%] top-[50%] z-50 grid w-[95vw] max-w-2xl translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 md:p-8 shadow-2xl duration-300 sm:rounded-lg",
-            "data-[state=open]:animate-in data-[state=closed]:animate-out",
-            "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-            "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-            "data-[state=open]:slide-in-from-bottom-4",
-          )}
-        >
-          <DialogHeader>
-            <div
-              className="mx-auto sm:mx-0 mb-2 inline-flex items-center gap-2 text-[0.65rem] tracking-[0.25em] uppercase"
-              style={{ color: "var(--gold)" }}
-            >
-              <Sparkles size={12} /> Reserve
-            </div>
-            <DialogTitle
-              className="font-display text-2xl md:text-3xl"
-              style={{ color: "var(--brown)" }}
-            >
-              Reserve your stay
-            </DialogTitle>
-            <DialogDescription>
-              Select your check-in and check-out dates. We'll confirm availability on WhatsApp.
-            </DialogDescription>
-          </DialogHeader>
+  // Mount / unmount with animation timing
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+    } else if (mounted) {
+      setEntered(false);
+      const t = setTimeout(() => setMounted(false), DURATION);
+      return () => clearTimeout(t);
+    }
+  }, [open, mounted]);
 
-          <div className="grid gap-6 md:grid-cols-[auto,1fr]">
-            <div className="flex justify-center">
+  // Compute origin from trigger button
+  useLayoutEffect(() => {
+    if (!mounted) return;
+    const compute = () => {
+      const panel = panelRef.current;
+      if (!panel) return;
+      const panelRect = panel.getBoundingClientRect();
+      const btn = originRef?.current?.getBoundingClientRect();
+      if (btn) {
+        setOrigin({
+          x: btn.left + btn.width / 2 - panelRect.left,
+          y: btn.top + btn.height / 2 - panelRect.top,
+        });
+      } else {
+        setOrigin({ x: panelRect.width / 2, y: 0 });
+      }
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, [mounted, originRef]);
+
+  // Trigger enter animation after mount + origin computed
+  useEffect(() => {
+    if (!mounted) return;
+    const id = requestAnimationFrame(() => setEntered(true));
+    return () => cancelAnimationFrame(id);
+  }, [mounted]);
+
+  // Escape to close
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onOpenChange(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onOpenChange]);
+
+  if (!mounted) return null;
+
+  return (
+    <div className="fixed inset-0 z-50">
+      {/* Scrim + blur */}
+      <button
+        type="button"
+        aria-label="Close reservation"
+        onClick={() => onOpenChange(false)}
+        className="absolute inset-0 w-full h-full cursor-default"
+        style={{
+          background: "rgba(0,0,0,0.25)",
+          backdropFilter: "blur(10px)",
+          opacity: entered ? 1 : 0,
+          transition: `opacity ${DURATION}ms ${EASE}`,
+        }}
+      />
+
+      {/* Panel: horizontal reservation bar below nav */}
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Reserve your stay"
+        className="absolute left-1/2 -translate-x-1/2 w-[95vw] max-w-5xl rounded-lg border bg-background shadow-2xl"
+        style={{
+          top: "88px",
+          transformOrigin: `${origin.x}px ${origin.y}px`,
+          transform: entered
+            ? "translateX(-50%) scale(1)"
+            : "translateX(-50%) scale(0.3)",
+          opacity: entered ? 1 : 0,
+          transition: `transform ${DURATION}ms ${EASE}, opacity ${DURATION}ms ${EASE}`,
+        }}
+      >
+        <div className="flex flex-col md:flex-row md:items-stretch">
+          {/* Dates */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                className="flex-1 text-left px-5 py-4 md:py-5 border-b md:border-b-0 md:border-r hover:bg-[var(--cream)] transition-colors"
+              >
+                <div
+                  className="text-[0.6rem] tracking-[0.25em] uppercase mb-1 flex items-center gap-2"
+                  style={{ color: "var(--gold)" }}
+                >
+                  <CalendarDays size={12} /> Dates
+                </div>
+                <div className="text-sm" style={{ color: "var(--brown)" }}>
+                  {range?.from && range?.to
+                    ? `${fmt(range.from)} → ${fmt(range.to)} · ${nights} night${nights > 1 ? "s" : ""}`
+                    : "Select check-in and check-out"}
+                </div>
+              </button>
+            </PopoverTrigger>
+            <PopoverContent align="start" className="p-0 w-auto">
               <Calendar
                 mode="range"
                 selected={range}
                 onSelect={setRange}
-                numberOfMonths={1}
+                numberOfMonths={2}
                 disabled={{ before: new Date() }}
                 className="pointer-events-auto"
               />
-            </div>
+            </PopoverContent>
+          </Popover>
 
-            <div className="space-y-4">
-              <div
-                className="rounded-md border p-4 text-sm space-y-2"
-                style={{ background: "var(--cream)" }}
+          {/* Apartment */}
+          <label className="flex-1 px-5 py-4 md:py-5 border-b md:border-b-0 md:border-r cursor-pointer relative">
+            <div
+              className="text-[0.6rem] tracking-[0.25em] uppercase mb-1"
+              style={{ color: "var(--gold)" }}
+            >
+              Apartment
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <select
+                value={apt}
+                onChange={(e) => setApt(e.target.value)}
+                className="w-full text-sm bg-transparent outline-none appearance-none pr-6"
+                style={{ color: "var(--brown)" }}
               >
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Check-in</span>
-                  <span style={{ color: "var(--brown)" }}>
-                    {range?.from ? fmt(range.from) : "—"}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Check-out</span>
-                  <span style={{ color: "var(--brown)" }}>
-                    {range?.to ? fmt(range.to) : "—"}
-                  </span>
-                </div>
-                <div className="flex justify-between pt-2 border-t">
-                  <span className="text-muted-foreground">Nights</span>
-                  <span style={{ color: "var(--brown)" }}>{nights || "—"}</span>
-                </div>
-              </div>
-
-              <label className="block">
-                <span
-                  className="text-[0.65rem] tracking-[0.25em] uppercase"
-                  style={{ color: "var(--brown)" }}
-                >
-                  Apartment
-                </span>
-                <select
-                  value={apt}
-                  onChange={(e) => setApt(e.target.value)}
-                  className="mt-1 w-full border-b border-black/15 py-2 text-sm outline-none focus:border-[var(--gold)] bg-transparent"
-                >
-                  <option>2 Bedroom Apartment</option>
-                  <option>3 Bedroom Apartment</option>
-                </select>
-              </label>
-
-              <label className="block">
-                <span
-                  className="text-[0.65rem] tracking-[0.25em] uppercase flex items-center gap-2"
-                  style={{ color: "var(--brown)" }}
-                >
-                  <Users size={12} /> Guests
-                </span>
-                <select
-                  value={guests}
-                  onChange={(e) => setGuests(Number(e.target.value))}
-                  className="mt-1 w-full border-b border-black/15 py-2 text-sm outline-none focus:border-[var(--gold)] bg-transparent"
-                >
-                  {[1, 2, 3, 4, 5, 6].map((n) => (
-                    <option key={n} value={n}>
-                      {n} Guest{n > 1 ? "s" : ""}
-                    </option>
-                  ))}
-                </select>
-              </label>
+                <option>2 Bedroom Apartment</option>
+                <option>3 Bedroom Apartment</option>
+              </select>
+              <ChevronDown size={14} className="absolute right-5" style={{ color: "var(--brown)" }} />
             </div>
-          </div>
+          </label>
 
-          <DialogFooter className="gap-2 sm:gap-2">
-            <button
-              type="button"
-              onClick={() => setRange(undefined)}
-              className="text-xs tracking-[0.25em] uppercase px-4 py-2"
-              style={{ color: "var(--brown)" }}
+          {/* Guests */}
+          <label className="flex-1 px-5 py-4 md:py-5 border-b md:border-b-0 md:border-r cursor-pointer relative">
+            <div
+              className="text-[0.6rem] tracking-[0.25em] uppercase mb-1 flex items-center gap-2"
+              style={{ color: "var(--gold)" }}
             >
-              Clear
-            </button>
-            <a
-              href={confirmHref}
-              target="_blank"
-              rel="noreferrer"
-              aria-disabled={!canConfirm}
-              onClick={(e) => {
-                if (!canConfirm) {
-                  e.preventDefault();
-                  return;
-                }
-                onOpenChange(false);
-              }}
-              className="btn-gold btn-gold-hover"
-              style={!canConfirm ? { opacity: 0.5, pointerEvents: "none" } : undefined}
-            >
-              <MessageCircle size={14} /> Confirm on WhatsApp
-            </a>
-          </DialogFooter>
+              <Users size={12} /> Guests
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <select
+                value={guests}
+                onChange={(e) => setGuests(Number(e.target.value))}
+                className="w-full text-sm bg-transparent outline-none appearance-none pr-6"
+                style={{ color: "var(--brown)" }}
+              >
+                {[1, 2, 3, 4, 5, 6].map((n) => (
+                  <option key={n} value={n}>
+                    {n} Guest{n > 1 ? "s" : ""}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown size={14} className="absolute right-5" style={{ color: "var(--brown)" }} />
+            </div>
+          </label>
 
-          <DialogPrimitive.Close
-            className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none"
-            style={{ color: "var(--brown)" }}
+          {/* Confirm */}
+          <a
+            href={confirmHref}
+            target="_blank"
+            rel="noreferrer"
+            onClick={(e) => {
+              if (!canConfirm) {
+                e.preventDefault();
+                return;
+              }
+              onOpenChange(false);
+            }}
+            aria-disabled={!canConfirm}
+            className="flex items-center justify-center px-8 py-4 md:py-5 text-[0.7rem] tracking-[0.25em] uppercase font-medium transition-colors"
+            style={{
+              background: "var(--gold)",
+              color: "#1a1a1a",
+              opacity: canConfirm ? 1 : 0.5,
+              pointerEvents: canConfirm ? "auto" : "none",
+            }}
           >
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
-          </DialogPrimitive.Close>
-        </DialogPrimitive.Content>
-      </DialogPrimitive.Portal>
-    </Dialog>
+            Reserve
+          </a>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => onOpenChange(false)}
+          aria-label="Close"
+          className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white shadow-md border flex items-center justify-center hover:scale-105 transition-transform"
+          style={{ color: "var(--brown)" }}
+        >
+          <X size={14} />
+        </button>
+      </div>
+    </div>
   );
 }
