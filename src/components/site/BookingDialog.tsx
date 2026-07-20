@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { createPortal } from "react-dom";
 import { CalendarDays, Users, X, ChevronDown } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
@@ -94,8 +95,8 @@ export function BookingDialog({
   // Trigger enter animation after mount + origin computed
   useEffect(() => {
     if (!mounted) return;
-    const id = requestAnimationFrame(() => setEntered(true));
-    return () => cancelAnimationFrame(id);
+    const t = setTimeout(() => setEntered(true), 20);
+    return () => clearTimeout(t);
   }, [mounted]);
 
   // Escape to close
@@ -109,8 +110,9 @@ export function BookingDialog({
   }, [open, onOpenChange]);
 
   if (!mounted) return null;
+  if (typeof document === "undefined") return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50">
       {/* Scrim + blur */}
       <button
@@ -259,6 +261,7 @@ export function BookingDialog({
           <X size={14} />
         </button>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
