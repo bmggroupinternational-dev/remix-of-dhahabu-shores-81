@@ -143,7 +143,7 @@ function ApartmentDetail({
               <p className="mt-2 text-sm text-muted-foreground">
                 Speak to reservations for availability, seasonal rates and long-stay arrangements.
               </p>
-              <Link to="/contact" className="btn-gold btn-gold-hover w-full mt-6">Book Now</Link>
+              <Link to="/reach-us" className="btn-gold btn-gold-hover w-full mt-6">Book Now</Link>
               <a href="tel:+255724972277" className="btn-outline-brown w-full mt-3">Call +255 724 972 277</a>
               <a
                 href="https://wa.me/255724972277"

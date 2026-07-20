@@ -9,8 +9,7 @@ const links = [
   { to: "/apartments", label: "Apartments" },
   { to: "/amenities", label: "Amenities" },
   { to: "/gallery", label: "Gallery" },
-  { to: "/location", label: "Location" },
-  { to: "/contact", label: "Contact" },
+  { to: "/reach-us", label: "Reach Us" },
 ] as const;
 
 export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean }) {
@@ -58,7 +57,7 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
 
         <div className="flex items-center justify-end gap-3">
           <Link
-            to="/contact"
+            to="/reach-us"
             className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-[0.7rem] tracking-[0.2em] uppercase font-medium rounded-sm transition-all duration-300 shadow-sm"
             style={{ background: "var(--gold)", color: "#1a1a1a" }}
             onMouseEnter={(e) => (e.currentTarget.style.background = "#b8942d")}
@@ -101,7 +100,7 @@ export function Nav({ transparentOnTop = true }: { transparentOnTop?: boolean })
               </Link>
             ))}
             <Link
-              to="/contact"
+              to="/reach-us"
               onClick={() => setOpen(false)}
               className="mt-6 px-6 py-3 text-xs tracking-[0.2em] uppercase rounded-sm"
               style={{ background: "var(--gold)", color: "#1a1a1a" }}

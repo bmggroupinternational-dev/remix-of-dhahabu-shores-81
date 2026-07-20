@@ -24,7 +24,7 @@ export function Footer() {
               ["Apartments", "/apartments"],
               ["Amenities", "/amenities"],
               ["Gallery", "/gallery"],
-              ["Location", "/location"],
+              ["Reach Us", "/reach-us"],
             ].map(([label, href]) => (
               <li key={href}>
                 <Link to={href} className="hover:text-[var(--gold)] transition-colors">
