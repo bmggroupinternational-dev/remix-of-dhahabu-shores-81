@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReachUsRouteImport } from './routes/reach-us'
 import { Route as LocationRouteImport } from './routes/location'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -19,6 +20,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as Apartments3BedroomRouteImport } from './routes/apartments.3-bedroom'
 import { Route as Apartments2BedroomRouteImport } from './routes/apartments.2-bedroom'
 
+const ReachUsRoute = ReachUsRouteImport.update({
+  id: '/reach-us',
+  path: '/reach-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocationRoute = LocationRouteImport.update({
   id: '/location',
   path: '/location',
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/location': typeof LocationRoute
+  '/reach-us': typeof ReachUsRoute
   '/apartments/2-bedroom': typeof Apartments2BedroomRoute
   '/apartments/3-bedroom': typeof Apartments3BedroomRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/location': typeof LocationRoute
+  '/reach-us': typeof ReachUsRoute
   '/apartments/2-bedroom': typeof Apartments2BedroomRoute
   '/apartments/3-bedroom': typeof Apartments3BedroomRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/location': typeof LocationRoute
+  '/reach-us': typeof ReachUsRoute
   '/apartments/2-bedroom': typeof Apartments2BedroomRoute
   '/apartments/3-bedroom': typeof Apartments3BedroomRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/gallery'
     | '/location'
+    | '/reach-us'
     | '/apartments/2-bedroom'
     | '/apartments/3-bedroom'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/gallery'
     | '/location'
+    | '/reach-us'
     | '/apartments/2-bedroom'
     | '/apartments/3-bedroom'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/gallery'
     | '/location'
+    | '/reach-us'
     | '/apartments/2-bedroom'
     | '/apartments/3-bedroom'
   fileRoutesById: FileRoutesById
@@ -143,10 +155,18 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
   LocationRoute: typeof LocationRoute
+  ReachUsRoute: typeof ReachUsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reach-us': {
+      id: '/reach-us'
+      path: '/reach-us'
+      fullPath: '/reach-us'
+      preLoaderRoute: typeof ReachUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/location': {
       id: '/location'
       path: '/location'
@@ -235,6 +255,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
   LocationRoute: LocationRoute,
+  ReachUsRoute: ReachUsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
