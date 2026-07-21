@@ -23,7 +23,7 @@ export const Route = createFileRoute("/apartments/3-bedroom")({
       guests={6}
       beds={3}
       baths={3}
-      gallery={[IMG.loungeMain, IMG.livingRoom, IMG.bedroomMain, IMG.bedroomSecondary, IMG.bathroomMain, IMG.bedroomDetail]}
+      gallery={[IMG.loungeMain, IMG.diningKitchen, IMG.bedroomChairs, IMG.bedroomSingle, IMG.kitchenAppliances, IMG.bedroomLamp]}
       description={[
         "The three bedroom apartments extend everything Dhahabu stands for — more living, more privacy, more space for a family or a group to be at ease. Three ensuite bedrooms sit off a broad living and dining area, anchored by a fully equipped kitchen.",
         "Ideal for extended stays, corporate housing and multi-generational travel, with the quiet service and security you'd expect from a private residence.",
