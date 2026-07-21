@@ -81,21 +81,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Premium serviced apartments in Mbezi Beach, Dar es Salaam. Spacious 2 and 3 bedroom residences designed for comfort, elegance, and privacy.",
+          "Premium serviced apartments in Mbezi Beach, Dar es Salaam. Rest, relax, recharge in spacious 2 and 3 bedroom residences.",
       },
       { property: "og:title", content: "Dhahabu Suites — Luxury Living by Mbezi Beach" },
       {
         property: "og:description",
         content:
-          "Premium serviced apartments in Mbezi Beach, Dar es Salaam. Spacious residences designed for comfort, elegance, and privacy.",
+          "Premium serviced apartments in Mbezi Beach, Dar es Salaam. Rest, relax, recharge in spacious 2 and 3 bedroom residences.",
       },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Dhahabu Suites" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Dhahabu Suites — Luxury Living by Mbezi Beach" },
+      { name: "twitter:description", content: "Premium serviced apartments in Mbezi Beach, Dar es Salaam. Rest, relax, recharge in spacious 2 and 3 bedroom residences." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/773a0aec-dbda-4e14-8cd7-36878b1d4f84/id-preview-1ad7f752--8aa2b05b-6152-4091-abc0-8cfe077bd896.lovable.app-1784623392990.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/773a0aec-dbda-4e14-8cd7-36878b1d4f84/id-preview-1ad7f752--8aa2b05b-6152-4091-abc0-8cfe077bd896.lovable.app-1784623392990.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/jpeg", href: "/favicon.jpg" },
+      { rel: "icon", type: "image/x-icon", href: "/favicon.jpg" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
       {
