@@ -25,7 +25,7 @@ export const Route = createFileRoute("/apartments/2-bedroom")({
       guests={4}
       beds={2}
       baths={2}
-      gallery={[IMG.bedroomMain, IMG.livingRoom, IMG.bedroomDetail, IMG.bathroomMain, IMG.bedroomSecondary, IMG.bathroomDetail]}
+      gallery={[IMG.bedroomMain, IMG.livingRoom, IMG.kitchen, IMG.bedroomLinen, IMG.bathroomMain, IMG.dining]}
       description={[
         "Our two bedroom apartments have been designed to feel effortlessly liveable. Generous living and dining spaces open onto a fully equipped kitchen, with two private bedrooms and two bathrooms that carry the same considered detail.",
         "Perfect for a weekend, a week or a season — with everything you'd expect from a private residence, quietly kept for you.",
