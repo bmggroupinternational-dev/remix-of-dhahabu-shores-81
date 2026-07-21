@@ -17,7 +17,7 @@ export const Route = createFileRoute("/gallery")({
   component: Gallery,
 });
 
-const CATEGORIES = ["All", "Living Room", "Bedrooms", "Bathrooms", "Swimming Pool", "Exterior"];
+const CATEGORIES = ["All", "Living Room", "Bedrooms", "Kitchen & Dining", "Bathrooms", "Swimming Pool", "Exterior"];
 
 function Gallery() {
   const [filter, setFilter] = useState<string>("All");
