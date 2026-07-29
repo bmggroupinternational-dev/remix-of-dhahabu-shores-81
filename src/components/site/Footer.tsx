@@ -87,10 +87,22 @@ export function Footer() {
             </button>
           </form>
           <div className="flex gap-4 mt-6" style={{ color: "var(--brown)" }}>
-            <a href="#" aria-label="Instagram" className="hover:text-[var(--gold)] transition-colors">
+            <a
+              href="https://www.instagram.com/dhahabusuites?igsh=MW11MGV4eDR3eDh2dQ=="
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              className="hover:text-[var(--gold)] transition-colors"
+            >
               <Instagram size={20} />
             </a>
-            <a href="#" aria-label="Facebook" className="hover:text-[var(--gold)] transition-colors">
+            <a
+              href="https://www.facebook.com/profile.php?id=61590384160947"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
+              className="hover:text-[var(--gold)] transition-colors"
+            >
               <Facebook size={20} />
             </a>
           </div>
