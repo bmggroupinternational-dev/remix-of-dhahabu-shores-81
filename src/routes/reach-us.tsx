@@ -69,7 +69,7 @@ function ReachUs() {
               {[
                 { icon: MapPin, label: "Mbezi Beach, Dar es Salaam, Tanzania", href: "https://www.google.com/maps/dir/?api=1&destination=Dhahabu+Suites,+Mbezi+Beach,+Dar+es+Salaam" },
                 { icon: Phone, label: "+255 724 972 277", href: "tel:+255724972277" },
-                { icon: Mail, label: "dhahabusuitesdar@gmail.com", href: "mailto:dhahabusuitesdar@gmail.com" },
+                { icon: Mail, label: "dhahabusuites@gmail.com", href: "mailto:dhahabusuites@gmail.com" },
               ].map(({ icon: Icon, label, href }) => (
                 <li key={label}>
                   <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="flex gap-4 items-start group">

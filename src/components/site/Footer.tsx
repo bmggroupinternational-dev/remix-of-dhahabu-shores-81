@@ -52,10 +52,10 @@ export function Footer() {
             <li className="flex gap-3">
               <Mail size={16} className="mt-0.5 shrink-0" style={{ color: "var(--gold)" }} />
               <a
-                href="mailto:dhahabusuitesdar@gmail.com"
+                href="mailto:dhahabusuites@gmail.com"
                 className="hover:text-[var(--gold)] transition-colors break-all"
               >
-                dhahabusuitesdar@gmail.com
+                dhahabusuites@gmail.com
               </a>
             </li>
           </ul>
